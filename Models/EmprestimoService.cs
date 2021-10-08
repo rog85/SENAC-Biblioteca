@@ -47,7 +47,7 @@ namespace Biblioteca.Models {
                 } else {
                     query = bc.Emprestimos.Include (e => e.Livro);
                 }
-                return query.OrderByDescending (e => e.DataDevolucao).Skip (pular).Take (tamanho).OrderByDescending (e => e.DataDevolucao).ToList ();
+                return query.OrderByDescending (e => e.DataDevolucao).Skip (pular).Take (tamanho).ToList ();
             }
         }
 
