@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Biblioteca.Models {
             }
         }
 
-        public ICollection<Livro> ListarTodos (FiltrosLivros filtro = null) {
+        public ICollection<Livro> ListarTodos (Filtragem filtro = null) {
             using (BibliotecaContext bc = new BibliotecaContext ()) {
                 IQueryable<Livro> query;
 
@@ -30,11 +31,11 @@ namespace Biblioteca.Models {
                     //definindo dinamicamente a filtragem
                     switch (filtro.TipoFiltro) {
                         case "Autor":
-                            query = bc.Livros.Where (l => l.Autor.Contains (filtro.Filtro));
+                            query = bc.Livros.Where (l => l.Autor.Contains (filtro.Filtro, StringComparison.CurrentCultureIgnoreCase));
                             break;
 
                         case "Titulo":
-                            query = bc.Livros.Where (l => l.Titulo.Contains (filtro.Filtro));
+                            query = bc.Livros.Where (l => l.Titulo.Contains (filtro.Filtro, StringComparison.CurrentCultureIgnoreCase));
                             break;
 
                         default:

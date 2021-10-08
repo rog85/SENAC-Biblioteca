@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Biblioteca.Controllers {
     public class LivroController : Controller {
-        
+
         public IActionResult Cadastro () {
             Autenticacao.CheckLogin (this);
             return View ();
@@ -24,9 +24,9 @@ namespace Biblioteca.Controllers {
 
         public IActionResult Listagem (string tipoFiltro, string filtro) {
             Autenticacao.CheckLogin (this);
-            FiltrosLivros objFiltro = null;
+            Filtragem objFiltro = null;
             if (!string.IsNullOrEmpty (filtro)) {
-                objFiltro = new FiltrosLivros ();
+                objFiltro = new Filtragem ();
                 objFiltro.Filtro = filtro;
                 objFiltro.TipoFiltro = tipoFiltro;
             }
