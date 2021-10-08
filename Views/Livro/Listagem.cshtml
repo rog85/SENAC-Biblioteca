@@ -47,9 +47,16 @@
                         }
                     </tbody>
                 </table>
-            } else{
+            }
+            else
+            {
                 <p>Nenhum registro encontrado!</p>
             }
+        }
+
+        @for (int i = 1; i <= (int)ViewData["NroPaginas"]; i++)
+        {
+            <a class="badge badge-primary text-monospace" href="Listagem?p=@i">Página @i</a>
         }
     </div>
 </div>

@@ -48,12 +48,12 @@ namespace Biblioteca.Models {
             }
         }
 
-        public ICollection<Usuario> ListarTodos (Filtragem filtro = null) {
+        public ICollection<Usuario> ListarTodos (int pagina = 1, int tamanho = 4, Filtragem filtro = null) {
             using (BibliotecaContext bc = new BibliotecaContext ()) {
                 IQueryable<Usuario> query;
+                int pular = (pagina - 1) * tamanho;
 
                 if (filtro != null) {
-                    //definindo dinamicamente a filtragem
                     switch (filtro.TipoFiltro) {
                         case "Nome":
                             query = bc.Usuarios.Where (u => u.Nome.Contains (filtro.Filtro, StringComparison.CurrentCultureIgnoreCase));
@@ -68,14 +68,10 @@ namespace Biblioteca.Models {
                             break;
                     }
                 } else {
-                    // caso filtro não tenha sido informado
                     query = bc.Usuarios;
                 }
-
-                //ordenação padrão
-                return query.ToList ();
+                return query.Skip (pular).Take (tamanho).ToList ();
             }
-
         }
 
         public Usuario ObterPorId (int id) {
@@ -100,6 +96,12 @@ namespace Biblioteca.Models {
                 hashMD5 = BitConverter.ToString (MD5.Create ().ComputeHash (Encoding.ASCII.GetBytes (senha))).Replace ("-", "");
 
             return hashMD5;
+        }
+
+        public int NumeroDeUsuarios () {
+            using (var context = new BibliotecaContext ()) {
+                return context.Usuarios.Count ();
+            }
         }
     }
 }

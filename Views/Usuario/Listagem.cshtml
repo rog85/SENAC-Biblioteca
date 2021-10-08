@@ -43,8 +43,7 @@
                                 <td>@u.Login</td>
                                 <td>@u.Senha</td>
                                 <td>
-                                    <a href="/Usuario/Edicao/@u.Id">Editar</a>
-                                    <a href="/Usuario/Exclui/@u.Id">Excluir</a>
+                                    <a href="/Usuario/Edicao/@u.Id">Editar</a> | <a href="/Usuario/Exclui/@u.Id">Excluir</a>
                                 </td>
                             </tr>
                         }
@@ -56,7 +55,10 @@
                 <p>Nenhum registro encontrado!</p>
             }
         }
-    </div>
 
-    
+        @for (int i = 1; i <= (int)ViewData["NroPaginas"]; i++)
+        {
+            <a class="badge badge-primary text-monospace" href="Listagem?p=@i">Página @i</a>
+        }
+    </div>
 </div>

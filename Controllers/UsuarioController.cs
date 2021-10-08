@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Biblioteca.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,7 +33,7 @@ namespace Biblioteca.Controllers {
 
         }
 
-        public IActionResult Listagem (string tipoFiltro, string filtro) {
+        public IActionResult Listagem (string tipoFiltro, string filtro, int p = 1) {
             Autenticacao.CheckLogin (this);
             Filtragem objFiltro = null;
             if (!string.IsNullOrEmpty (filtro)) {
@@ -39,8 +41,12 @@ namespace Biblioteca.Controllers {
                 objFiltro.Filtro = filtro;
                 objFiltro.TipoFiltro = tipoFiltro;
             }
+            int quantidadePorPagina = 4;
             UsuarioService usuarioService = new UsuarioService ();
-            return View (usuarioService.ListarTodos (objFiltro));
+            int totalDeRegistros = usuarioService.NumeroDeUsuarios ();
+            ICollection<Usuario> lista = usuarioService.ListarTodos (p, quantidadePorPagina, objFiltro);
+            ViewData["NroPaginas"] = (int) Math.Ceiling ((double) totalDeRegistros / quantidadePorPagina);
+            return View (lista);
         }
 
         public IActionResult Edicao (int id) {

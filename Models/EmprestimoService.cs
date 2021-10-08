@@ -25,12 +25,12 @@ namespace Biblioteca.Models {
             }
         }
 
-        public ICollection<Emprestimo> ListarTodos (Filtragem filtro = null) {
+        public ICollection<Emprestimo> ListarTodos (int pagina = 1, int tamanho = 4, Filtragem filtro = null) {
             using (BibliotecaContext bc = new BibliotecaContext ()) {
                 IQueryable<Emprestimo> query;
+                int pular = (pagina - 1) * tamanho;
 
                 if (filtro != null) {
-                    //definindo dinamicamente a filtragem
                     switch (filtro.TipoFiltro) {
                         case "Usuario":
                             query = bc.Emprestimos.Include (e => e.Livro).Where (e => e.NomeUsuario.Contains (filtro.Filtro, StringComparison.CurrentCultureIgnoreCase));
@@ -45,17 +45,21 @@ namespace Biblioteca.Models {
                             break;
                     }
                 } else {
-                    // caso filtro não tenha sido informado
                     query = bc.Emprestimos.Include (e => e.Livro);
                 }
-                return query.OrderByDescending (e => e.DataDevolucao).ToList ();
-                //return bc.Emprestimos.Include (e => e.Livro).OrderByDescending (e => e.DataDevolucao).ToList ();
+                return query.Skip (pular).Take (tamanho).OrderByDescending (e => e.DataDevolucao).ToList ();
             }
         }
 
         public Emprestimo ObterPorId (int id) {
             using (BibliotecaContext bc = new BibliotecaContext ()) {
                 return bc.Emprestimos.Find (id);
+            }
+        }
+
+        public int NumeroDeEmprestimos () {
+            using (var context = new BibliotecaContext ()) {
+                return context.Emprestimos.Count ();
             }
         }
     }
