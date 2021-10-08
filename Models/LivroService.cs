@@ -23,7 +23,7 @@ namespace Biblioteca.Models {
             }
         }
 
-        public ICollection<Livro> ListarTodos (int pagina = 1, int tamanho = 4, Filtragem filtro = null) {
+        public ICollection<Livro> ListarTodos (int pagina = 1, int tamanho = 10, Filtragem filtro = null) {
             using (BibliotecaContext bc = new BibliotecaContext ()) {
                 IQueryable<Livro> query;
                 int pular = (pagina - 1) * tamanho;

@@ -32,7 +32,7 @@ namespace Biblioteca.Controllers {
                 objFiltro.Filtro = filtro;
                 objFiltro.TipoFiltro = tipoFiltro;
             }
-            int quantidadePorPagina = 4;
+            int quantidadePorPagina = 10;
             LivroService livroService = new LivroService ();
             int totalDeRegistros = livroService.NumeroDeLivros ();
             ICollection<Livro> lista = livroService.ListarTodos (p, quantidadePorPagina, objFiltro);

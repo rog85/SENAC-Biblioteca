@@ -41,7 +41,7 @@ namespace Biblioteca.Controllers {
                 objFiltro.Filtro = filtro;
                 objFiltro.TipoFiltro = tipoFiltro;
             }
-            int quantidadePorPagina = 4;
+            int quantidadePorPagina = 5;
             UsuarioService usuarioService = new UsuarioService ();
             int totalDeRegistros = usuarioService.NumeroDeUsuarios ();
             ICollection<Usuario> lista = usuarioService.ListarTodos (p, quantidadePorPagina, objFiltro);

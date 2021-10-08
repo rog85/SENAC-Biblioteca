@@ -39,7 +39,7 @@ namespace Biblioteca.Controllers {
                 objFiltro.TipoFiltro = tipoFiltro;
             }
 
-            int quantidadePorPagina = 4;
+            int quantidadePorPagina = 5;
             EmprestimoService emprestimoService = new EmprestimoService ();
             int totalDeRegistros = emprestimoService.NumeroDeEmprestimos ();
             ICollection<Emprestimo> lista = emprestimoService.ListarTodos (p, quantidadePorPagina, objFiltro);
