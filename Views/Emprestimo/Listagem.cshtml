@@ -34,20 +34,34 @@
                             <th>Data Devolução</th>
                             <th>Livro</th>
                             <th>Autor</th>
+                            <th>Devolvido</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (Emprestimo e in Model)
                         {
-                            <tr>
+                            string estilo = "";
+                            string link = "";
+                            if (e.EstaEmAtraso())
+                            {
+                                estilo = "bg-danger text-white";
+                                link = "text-white";
+                            }
+                            else if (e.Devolvido)
+                                estilo = "table-success";
+
+                            <tr class="@estilo">
                                 <td>@e.Id</td>
                                 <td>@e.NomeUsuario</td>
                                 <td>@e.DataEmprestimo.ToString("dd/MM/yyyy")</td>
                                 <td>@e.DataDevolucao.ToString("dd/MM/yyyy")</td>
                                 <td>@e.Livro.Titulo</td>
                                 <td>@e.Livro.Autor</td>
-                                <td><a href="/Emprestimo/Edicao/@e.Id">Editar</a></td>
+                                <td>@{
+                                        string s = e.Devolvido == true ? "Sim" : "Não";
+                                    } @s</td>
+                                <td><a class="@link" href="/Emprestimo/Edicao/@e.Id">Editar</a></td>
                             </tr>
                         }
                     </tbody>

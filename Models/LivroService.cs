@@ -45,7 +45,7 @@ namespace Biblioteca.Models {
                 } else {
                     query = bc.Livros;
                 }
-                return query.Skip (pular).Take (tamanho).OrderBy (l => l.Titulo).ToList ();
+                return query.OrderBy (l => l.Titulo).Skip (pular).Take (tamanho).OrderBy (l => l.Titulo).ToList ();
             }
         }
 

@@ -20,7 +20,7 @@ namespace Biblioteca.Models {
                 emprestimo.LivroId = e.LivroId;
                 emprestimo.DataEmprestimo = e.DataEmprestimo;
                 emprestimo.DataDevolucao = e.DataDevolucao;
-
+                emprestimo.Devolvido = e.Devolvido;
                 bc.SaveChanges ();
             }
         }
@@ -47,7 +47,7 @@ namespace Biblioteca.Models {
                 } else {
                     query = bc.Emprestimos.Include (e => e.Livro);
                 }
-                return query.Skip (pular).Take (tamanho).OrderByDescending (e => e.DataDevolucao).ToList ();
+                return query.OrderByDescending (e => e.DataDevolucao).Skip (pular).Take (tamanho).OrderByDescending (e => e.DataDevolucao).ToList ();
             }
         }
 
